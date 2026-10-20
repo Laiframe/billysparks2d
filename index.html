@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Выборы в Кольчугино 2011</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Итоги выборов в Совет народных депутатов Кольчугинского района IV созыва 13 марта 2011 года по каждому участку и округу.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Mono&family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Serif:wght@400;700&display=swap">
+<style>
+/* Layout: одна колонка ~ 960px; сводка-«протокол» → партии → участки → округа → о данных. */
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --ink: #16191d;
+  --ink-2: #4b525b;
+  --ink-3: #737b85;
+  --rule: #dde1e5;
+  --rule-strong: #b9c0c7;
+  --accent: #9a5523;       /* латунь: Кольчугино — город цветного металла */
+  --accent-soft: #f3e7dc;
+  --invalid: #b3b8be;
+  --s-ldpr: #2a78d6;
+  --s-er: #eb6834;
+  --s-yabloko: #1baf7a;
+  --s-kprf: #eda100;
+  --s-sr: #e87ba4;
+  --cand: #2a78d6;
+  --f-display: "PT Serif", Georgia, "Times New Roman", serif;
+  --f-body: "PT Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-mono: "PT Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131518; --surface: #1b1e22; --ink: #eef0f2; --ink-2: #bcc2c9; --ink-3: #8d949c;
+    --rule: #2c3036; --rule-strong: #454b53; --accent: #d9935c; --accent-soft: #33261c;
+    --invalid: #5d636b;
+    --s-ldpr: #3987e5; --s-er: #d95926; --s-yabloko: #199e70; --s-kprf: #c98500; --s-sr: #d55181;
+    --cand: #3987e5;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131518; --surface: #1b1e22; --ink: #eef0f2; --ink-2: #bcc2c9; --ink-3: #8d949c;
+  --rule: #2c3036; --rule-strong: #454b53; --accent: #d9935c; --accent-soft: #33261c;
+  --invalid: #5d636b;
+  --s-ldpr: #3987e5; --s-er: #d95926; --s-yabloko: #199e70; --s-kprf: #c98500; --s-sr: #d55181;
+  --cand: #3987e5;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 16px/1.5 var(--f-body);
+  -webkit-text-size-adjust: 100%;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--bg);
+}
+.wrap {
+  max-width: 980px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.muted { color: var(--ink-2); }
+.eyebrow {
+  font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3);
+}
+
+/* Шапка */
+header.top { padding-block: 40px 28px; border-bottom: 1px solid var(--rule); }
+header.top h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.12; margin-top: 10px; max-width: 22ch; }
+header.top .sub { margin-top: 12px; font-size: 18px; color: var(--ink-2); }
+.lede { margin-top: 20px; max-width: 64ch; font-size: 17px; }
+.lede strong { color: var(--ink); }
+
+/* Сводка в виде строк протокола */
+.protocol {
+  margin-top: 28px; background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 6px; overflow: hidden;
+}
+.protocol-head {
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 12px 16px; border-bottom: 1px solid var(--rule); font-size: 13px; color: var(--ink-3);
+}
+.protocol ol { list-style: none; margin: 0; padding: 0; }
+.protocol li {
+  display: grid; grid-template-columns: 2.5em 1fr auto; gap: 12px; align-items: baseline;
+  padding: 9px 16px; border-bottom: 1px dashed var(--rule);
+}
+.protocol li:last-child { border-bottom: 0; }
+.protocol .ln { color: var(--ink-3); font-size: 13px; }
+.protocol .val { font-size: 17px; text-align: right; }
+.protocol .val small { color: var(--ink-3); font-size: 13px; margin-left: 8px; }
+.protocol li.key { background: var(--accent-soft); }
+.protocol li.key .val { font-weight: 700; }
+
+/* Навигация */
+nav.sections {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--bg); border-bottom: 1px solid var(--rule);
+}
+nav.sections .wrap { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+nav.sections a {
+  flex: none; padding: 12px 12px; color: var(--ink-2); text-decoration: none; font-weight: 700;
+  font-size: 15px; border-bottom: 2px solid transparent;
+}
+nav.sections a:hover { color: var(--ink); border-bottom-color: var(--rule-strong); }
+
+section { padding-block: 44px 8px; scroll-margin-top: 48px; }
+section > .wrap > h2 { font-size: clamp(24px, 3.6vw, 32px); }
+.section-intro { margin-top: 8px; max-width: 64ch; color: var(--ink-2); }
+
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; }
+
+/* Партии */
+.parties { margin-top: 24px; padding: 20px 16px 12px; }
+.party-row {
+  display: grid; grid-template-columns: minmax(0, 13em) minmax(0, 1fr) 5.2em; gap: 6px 14px;
+  align-items: center; padding-block: 8px;
+}
+.party-row .name { font-weight: 700; display: flex; align-items: center; gap: 8px; min-width: 0; }
+.swatch { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.party-row .bar-track { height: 22px; position: relative; }
+.party-row .bar { height: 100%; border-radius: 0 4px 4px 0; }
+.party-row .pct { text-align: right; font-size: 17px; }
+.party-row .votes { grid-column: 2 / 4; font-size: 13px; color: var(--ink-3); margin-top: -4px; }
+.party-row .full { font-weight: 400; font-size: 13px; color: var(--ink-3); }
+.callout {
+  margin-top: 16px; padding: 14px 16px; border-left: 3px solid var(--accent);
+  background: var(--accent-soft); max-width: 70ch;
+}
+
+/* Участки */
+.controls {
+  display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: end; margin-top: 20px;
+}
+.controls label { display: grid; gap: 4px; font-size: 13px; color: var(--ink-3); }
+select, .seg button {
+  font: inherit; font-size: 15px; color: var(--ink); background: var(--surface);
+  border: 1px solid var(--rule-strong); border-radius: 5px; padding: 6px 10px;
+}
+.seg { display: inline-flex; }
+.seg button { cursor: pointer; border-radius: 0; }
+.seg button:first-child { border-radius: 5px 0 0 5px; }
+.seg button:last-child { border-radius: 0 5px 5px 0; margin-left: -1px; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; font-size: 14px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+.uik-list { margin-top: 12px; }
+.uik-row {
+  display: grid; grid-template-columns: 5.5em 8.5em minmax(0, 1fr); gap: 14px;
+  align-items: center; padding: 10px 16px; border-bottom: 1px solid var(--rule);
+}
+.uik-row:last-child { border-bottom: 0; }
+.uik-row.head { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); padding-block: 10px; }
+.uik-id { font-weight: 700; }
+.uik-id a { color: inherit; text-decoration: none; }
+.uik-id a:hover { color: var(--accent); text-decoration: underline; }
+.uik-id small { display: block; font-weight: 400; color: var(--ink-3); font-size: 12px; }
+.turnout { display: grid; gap: 4px; font-size: 15px; }
+.turnout .mini { height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.turnout .mini i { display: block; height: 100%; background: var(--ink-2); }
+.stack { display: flex; gap: 2px; height: 22px; }
+.stack > span { height: 100%; min-width: 2px; }
+.stack > span:first-child { border-radius: 4px 0 0 4px; }
+.stack > span:last-child { border-radius: 0 4px 4px 0; }
+.stack-note { font-size: 13px; color: var(--ink-3); margin-top: 4px; }
+
+.table-wrap { overflow-x: auto; margin-top: 12px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { padding: 8px 10px; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+th { font-weight: 700; color: var(--ink-2); font-size: 13px; vertical-align: bottom; }
+th:first-child, td:first-child { text-align: left; }
+td { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+td.lead { font-weight: 700; color: var(--ink); }
+tr.total td { font-weight: 700; border-top: 2px solid var(--rule-strong); }
+td small { color: var(--ink-3); font-size: 12px; }
+
+/* Округа */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+.tabs button {
+  font: inherit; font-weight: 700; cursor: pointer; min-width: 44px; padding: 8px 12px;
+  border: 1px solid var(--rule-strong); background: var(--surface); color: var(--ink); border-radius: 5px;
+}
+.tabs button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.district { margin-top: 16px; padding: 20px 16px; }
+.district-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; align-items: baseline; }
+.district-head h3 { font-size: 24px; }
+.facts { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; font-size: 14px; color: var(--ink-2); }
+.facts b { color: var(--ink); font-family: var(--f-mono); font-weight: 400; }
+.cands { margin-top: 18px; }
+.cand-row {
+  display: grid; grid-template-columns: minmax(0, 17em) minmax(0, 1fr) 4.6em; gap: 4px 14px;
+  align-items: center; padding-block: 6px;
+}
+.cand-row .bar-track { height: 18px; }
+.cand-row .bar { height: 100%; background: var(--cand); border-radius: 0 4px 4px 0; opacity: .55; }
+.cand-row.first .bar { opacity: 1; }
+.cand-row.first .cname { font-weight: 700; }
+.cand-row .pct { text-align: right; }
+.cand-row .cvotes { font-size: 13px; color: var(--ink-3); }
+.cand-row .cname { min-width: 0; }
+
+/* О данных */
+.about { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); margin-top: 20px; }
+.about .card { padding: 18px 16px; }
+.about h3 { font-size: 19px; margin-bottom: 8px; }
+.about p, .about ul { margin: 0 0 10px; color: var(--ink-2); }
+.about ul { padding-left: 18px; }
+.check { display: inline-flex; gap: 6px; align-items: center; font-weight: 700; color: var(--ink); }
+.check::before {
+  content: "✓"; display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--s-yabloko); color: var(--surface); font-size: 13px;
+}
+
+footer { padding-block: 40px 48px; color: var(--ink-3); font-size: 14px; }
+
+/* Подсказка */
+#tip {
+  position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: var(--bg);
+  padding: 8px 10px; border-radius: 5px; font-size: 13px; line-height: 1.4; max-width: 260px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+}
+#tip b { display: block; }
+
+@media (max-width: 640px) {
+  .party-row { grid-template-columns: minmax(0, 1fr) 4.6em; }
+  .party-row .name { grid-column: 1 / 3; }
+  .party-row .bar-track { grid-column: 1 / 2; }
+  .party-row .votes { grid-column: 1 / 3; }
+  .uik-row { grid-template-columns: 5em minmax(0, 1fr); }
+  .uik-row .stack-cell { grid-column: 1 / 3; }
+  .uik-row.head .stack-cell { display: none; }
+  .cand-row { grid-template-columns: minmax(0, 1fr) 4.2em; }
+  .cand-row .cname { grid-column: 1 / 3; }
+  .protocol li { grid-template-columns: 2em 1fr; }
+  .protocol .val { grid-column: 2; text-align: left; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .bar { transition: width .4s ease; }
+}
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Кольчугинский район · Владимирская область</div>
+    <h1>Выборы в Совет народных депутатов Кольчугинского района</h1>
+    <div class="sub">IV созыв · 13 марта 2011 года · смешанная система: партийные списки и 8 округов</div>
+    <p class="lede" id="lede"></p>
+
+    <div class="protocol" aria-label="Сводный протокол по единому округу">
+      <div class="protocol-head">
+        <span>Сводный протокол ТИК · единый округ</span>
+        <span>строки протокола</span>
+      </div>
+      <ol id="protocol"></ol>
+    </div>
+  </div>
+</header>
+
+<nav class="sections" aria-label="Разделы">
+  <div class="wrap">
+    <a href="#parties">Партии</a>
+    <a href="#uiks">Участки</a>
+    <a href="#districts">Округа</a>
+    <a href="#about">О данных</a>
+  </div>
+</nav>
+
+<main>
+  <section id="parties">
+    <div class="wrap">
+      <h2>Голосование за партийные списки</h2>
+      <p class="section-intro">Единый избирательный округ, все 40 участков. Доля считается от числа бюллетеней, найденных в ящиках для голосования, то есть с учётом недействительных, как на сайте избиркома.</p>
+      <div class="card parties" id="party-chart"></div>
+      <div class="callout" id="party-callout"></div>
+    </div>
+  </section>
+
+  <section id="uiks">
+    <div class="wrap">
+      <h2>Результаты по участкам</h2>
+      <p class="section-intro">Явка и распределение голосов за партии на каждой участковой комиссии (УИК). Наведите на полосу, чтобы увидеть точные цифры, или переключитесь на таблицу.</p>
+      <div class="controls">
+        <label for="uik-sort">Сортировка
+          <select id="uik-sort"></select>
+        </label>
+        <label for="uik-district">Округ
+          <select id="uik-district"></select>
+        </label>
+        <div class="seg" role="group" aria-label="Вид">
+          <button type="button" id="view-chart" aria-pressed="true">Диаграмма</button>
+          <button type="button" id="view-table" aria-pressed="false">Таблица</button>
+        </div>
+      </div>
+      <div class="legend" id="uik-legend"></div>
+      <div class="card uik-list" id="uik-chart"></div>
+      <div class="card table-wrap" id="uik-table" hidden></div>
+    </div>
+  </section>
+
+  <section id="districts">
+    <div class="wrap">
+      <h2>Голосование по округам</h2>
+      <p class="section-intro">Вторая часть совета избиралась по восьми округам. Ниже показаны кандидаты в порядке убывания голосов. Сколько мандатов приходилось на каждый округ, в исходных данных не указано, поэтому отмечен только лидер.</p>
+      <div class="tabs" role="tablist" id="district-tabs" aria-label="Округ"></div>
+      <div class="card district" id="district-panel" role="tabpanel"></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <h2>О данных</h2>
+      <div class="about">
+        <div class="card">
+          <h3>Источник</h3>
+          <p>Протоколы участковых и территориальной комиссий с сайта ЦИК России (old.izbirkom.ru), выборы <span class="num">vrn 4334012124326</span>. У каждого участка на этой странице есть ссылка на его протокол.</p>
+          <p><a id="party-src" href="#" target="_blank" rel="noopener">Сводный протокол ТИК по единому округу</a></p>
+        </div>
+        <div class="card">
+          <h3>Сверка</h3>
+          <p><span class="check">Все суммы сходятся</span></p>
+          <ul>
+            <li>Голоса каждой партии, сложенные по 40 УИК, равны итогу ТИК.</li>
+            <li>Голоса каждого кандидата, сложенные по участкам округа, равны итогу окружной комиссии.</li>
+            <li>Сумма голосов в каждом протоколе равна числу действительных бюллетеней.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Как считались проценты</h3>
+          <p>Явка: выданные бюллетени (в помещении и вне его), делённые на число избирателей в списке.</p>
+          <p>Доля партии или кандидата: голоса, делённые на сумму действительных и недействительных бюллетеней.</p>
+          <p>Исходные таблицы (CSV) лежат в папке <a href="https://github.com/Laiframe/billysparks2d/tree/main/data" target="_blank" rel="noopener">data</a> репозитория.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Данные: ЦИК России, протоколы ТИК Кольчугинского района. Сайт неофициальный и собран из открытых протоколов.</div>
+</footer>
+
+<div id="tip" hidden></div>
+
+<script>
+const DATA = {"election":"Совет народных депутатов Кольчугинского района IV созыва","date":"2011-03-13","total":{"voters":46235,"issued":15295,"issuedOut":2274,"valid":14301,"invalid":988},"partyUrl":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012124331&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null","parties":[{"key":"ldpr","short":"ЛДПР","full":"Владимирское региональное отделение политической партии \"Либерально - демократическая партия России\" (ЛДПР)","votes":3970},{"key":"er","short":"Единая Россия","full":"Кольчугинское местное отделение Всероссийской политической партии \"ЕДИНАЯ РОССИЯ\"","votes":3877},{"key":"yabloko","short":"Яблоко","full":"Владимирское региональное отделение политической партии \"Российская объединенная демократическая партия \"ЯБЛОКО\"","votes":3144},{"key":"kprf","short":"КПРФ","full":"Владимирское региональное отделение политической партии \"Коммунистическая партия Российской Федерации\"","votes":2260},{"key":"sr","short":"Справедливая Россия","full":"Региональное отделение Политической партии СПРАВЕДЛИВАЯ РОССИЯ во Владимирской области","votes":1050}],"uiks":[{"uik":106,"district":1,"voters":1922,"issued":567,"issuedOut":55,"valid":539,"invalid":28,"votes":{"ldpr":146,"yabloko":117,"er":162,"kprf":70,"sr":44},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126004&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":107,"district":1,"voters":1832,"issued":649,"issuedOut":60,"valid":606,"invalid":43,"votes":{"ldpr":142,"yabloko":178,"er":157,"kprf":92,"sr":37},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126006&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":108,"district":1,"voters":1623,"issued":666,"issuedOut":59,"valid":598,"invalid":68,"votes":{"ldpr":145,"yabloko":196,"er":111,"kprf":106,"sr":40},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126007&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":109,"district":8,"voters":1895,"issued":555,"issuedOut":46,"valid":528,"invalid":27,"votes":{"ldpr":142,"yabloko":111,"er":145,"kprf":95,"sr":35},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126008&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":110,"district":2,"voters":1720,"issued":467,"issuedOut":143,"valid":445,"invalid":22,"votes":{"ldpr":111,"yabloko":74,"er":146,"kprf":68,"sr":46},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126009&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":111,"district":2,"voters":1832,"issued":551,"issuedOut":80,"valid":511,"invalid":40,"votes":{"ldpr":140,"yabloko":95,"er":174,"kprf":73,"sr":29},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126010&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":112,"district":2,"voters":2070,"issued":648,"issuedOut":107,"valid":604,"invalid":44,"votes":{"ldpr":159,"yabloko":150,"er":145,"kprf":91,"sr":59},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126011&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":113,"district":3,"voters":1896,"issued":571,"issuedOut":43,"valid":522,"invalid":49,"votes":{"ldpr":130,"yabloko":148,"er":121,"kprf":85,"sr":38},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126012&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":114,"district":3,"voters":2124,"issued":671,"issuedOut":45,"valid":616,"invalid":55,"votes":{"ldpr":168,"yabloko":150,"er":148,"kprf":96,"sr":54},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126013&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":115,"district":3,"voters":1826,"issued":533,"issuedOut":21,"valid":487,"invalid":46,"votes":{"ldpr":125,"yabloko":140,"er":128,"kprf":65,"sr":29},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126014&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":116,"district":4,"voters":1803,"issued":473,"issuedOut":37,"valid":437,"invalid":35,"votes":{"ldpr":110,"yabloko":106,"er":102,"kprf":81,"sr":38},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126015&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":117,"district":4,"voters":2198,"issued":580,"issuedOut":93,"valid":545,"invalid":35,"votes":{"ldpr":141,"yabloko":181,"er":108,"kprf":70,"sr":45},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126016&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":118,"district":4,"voters":2359,"issued":682,"issuedOut":135,"valid":644,"invalid":38,"votes":{"ldpr":156,"yabloko":186,"er":152,"kprf":97,"sr":53},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126017&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":119,"district":5,"voters":2159,"issued":570,"issuedOut":32,"valid":537,"invalid":33,"votes":{"ldpr":171,"yabloko":129,"er":133,"kprf":66,"sr":38},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126018&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":120,"district":5,"voters":2121,"issued":646,"issuedOut":46,"valid":607,"invalid":38,"votes":{"ldpr":185,"yabloko":124,"er":159,"kprf":80,"sr":59},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126019&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":121,"district":7,"voters":1603,"issued":363,"issuedOut":44,"valid":334,"invalid":29,"votes":{"ldpr":95,"yabloko":122,"er":78,"kprf":24,"sr":15},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126020&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":122,"district":5,"voters":1699,"issued":541,"issuedOut":48,"valid":494,"invalid":46,"votes":{"ldpr":105,"yabloko":174,"er":93,"kprf":78,"sr":44},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126021&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":123,"district":7,"voters":1666,"issued":485,"issuedOut":54,"valid":458,"invalid":26,"votes":{"ldpr":94,"yabloko":190,"er":93,"kprf":59,"sr":22},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126022&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":124,"district":6,"voters":1738,"issued":475,"issuedOut":54,"valid":435,"invalid":40,"votes":{"ldpr":132,"yabloko":93,"er":122,"kprf":62,"sr":26},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126023&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":125,"district":8,"voters":2210,"issued":668,"issuedOut":65,"valid":618,"invalid":50,"votes":{"ldpr":181,"yabloko":123,"er":189,"kprf":78,"sr":47},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126024&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":126,"district":6,"voters":346,"issued":252,"issuedOut":85,"valid":236,"invalid":16,"votes":{"ldpr":67,"yabloko":24,"er":53,"kprf":69,"sr":23},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126025&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":127,"district":7,"voters":113,"issued":76,"issuedOut":21,"valid":72,"invalid":4,"votes":{"ldpr":31,"yabloko":6,"er":25,"kprf":8,"sr":2},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126026&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":128,"district":6,"voters":2594,"issued":944,"issuedOut":137,"valid":902,"invalid":42,"votes":{"ldpr":451,"yabloko":58,"er":206,"kprf":144,"sr":43},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126027&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":129,"district":6,"voters":662,"issued":242,"issuedOut":60,"valid":229,"invalid":13,"votes":{"ldpr":64,"yabloko":7,"er":102,"kprf":44,"sr":12},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126028&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":130,"district":6,"voters":304,"issued":170,"issuedOut":50,"valid":160,"invalid":10,"votes":{"ldpr":32,"yabloko":8,"er":75,"kprf":26,"sr":19},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126029&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":131,"district":6,"voters":134,"issued":50,"issuedOut":20,"valid":49,"invalid":1,"votes":{"ldpr":6,"yabloko":6,"er":17,"kprf":16,"sr":4},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126030&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":132,"district":6,"voters":151,"issued":78,"issuedOut":11,"valid":74,"invalid":4,"votes":{"ldpr":15,"yabloko":4,"er":35,"kprf":15,"sr":5},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126031&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":133,"district":6,"voters":266,"issued":129,"issuedOut":41,"valid":123,"invalid":6,"votes":{"ldpr":47,"yabloko":10,"er":44,"kprf":17,"sr":5},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126032&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":134,"district":7,"voters":441,"issued":276,"issuedOut":62,"valid":255,"invalid":21,"votes":{"ldpr":59,"yabloko":51,"er":58,"kprf":72,"sr":15},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126033&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":135,"district":8,"voters":460,"issued":305,"issuedOut":119,"valid":294,"invalid":11,"votes":{"ldpr":113,"yabloko":32,"er":68,"kprf":68,"sr":13},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126034&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":136,"district":7,"voters":242,"issued":96,"issuedOut":19,"valid":91,"invalid":5,"votes":{"ldpr":26,"yabloko":9,"er":38,"kprf":13,"sr":5},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126035&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":137,"district":8,"voters":100,"issued":79,"issuedOut":25,"valid":75,"invalid":4,"votes":{"ldpr":21,"yabloko":7,"er":24,"kprf":16,"sr":7},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126036&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":138,"district":7,"voters":394,"issued":201,"issuedOut":79,"valid":195,"invalid":5,"votes":{"ldpr":37,"yabloko":36,"er":64,"kprf":40,"sr":18},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126037&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":139,"district":7,"voters":120,"issued":74,"issuedOut":13,"valid":66,"invalid":8,"votes":{"ldpr":11,"yabloko":8,"er":29,"kprf":11,"sr":7},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126038&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":140,"district":7,"voters":91,"issued":70,"issuedOut":14,"valid":68,"invalid":2,"votes":{"ldpr":11,"yabloko":1,"er":36,"kprf":13,"sr":7},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126039&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":141,"district":7,"voters":165,"issued":100,"issuedOut":19,"valid":97,"invalid":3,"votes":{"ldpr":22,"yabloko":13,"er":39,"kprf":18,"sr":5},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126040&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":142,"district":7,"voters":271,"issued":138,"issuedOut":22,"valid":127,"invalid":10,"votes":{"ldpr":23,"yabloko":29,"er":49,"kprf":21,"sr":5},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126041&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":143,"district":8,"voters":429,"issued":237,"issuedOut":82,"valid":224,"invalid":13,"votes":{"ldpr":71,"yabloko":7,"er":84,"kprf":38,"sr":24},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126042&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":144,"district":8,"voters":206,"issued":145,"issuedOut":44,"valid":136,"invalid":9,"votes":{"ldpr":29,"yabloko":7,"er":58,"kprf":27,"sr":15},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126043&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"},{"uik":145,"district":7,"voters":450,"issued":272,"issuedOut":84,"valid":263,"invalid":9,"votes":{"ldpr":56,"yabloko":34,"er":107,"kprf":48,"sr":18},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=1&tvd=4334012126044&vrn=4334012124326&prver=2&pronetvd=null&region=33&sub_region=33&type=425&report_mode=null"}],"districts":[{"n":1,"name":"Первый районный","voters":5377,"issued":1882,"issuedOut":174,"valid":1796,"invalid":86,"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012001&tvd=4334012124332&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null","candidates":[{"name":"Царьков Дмитрий Николаевич","votes":561},{"name":"Малышев Иван Вячеславович","votes":475},{"name":"Сидоров Сергей Владимирович","votes":429},{"name":"Фадеев Владимир Иванович","votes":241},{"name":"Ануфриев Игорь Вячеславович","votes":90}],"uiks":[{"uik":106,"voters":1922,"issued":567,"issuedOut":55,"valid":541,"invalid":26,"votes":{"Ануфриев Игорь Вячеславович":30,"Малышев Иван Вячеславович":177,"Сидоров Сергей Владимирович":110,"Фадеев Владимир Иванович":58,"Царьков Дмитрий Николаевич":166},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012001&tvd=4334012126045&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":107,"voters":1832,"issued":649,"issuedOut":60,"valid":616,"invalid":33,"votes":{"Ануфриев Игорь Вячеславович":29,"Малышев Иван Вячеславович":135,"Сидоров Сергей Владимирович":164,"Фадеев Владимир Иванович":103,"Царьков Дмитрий Николаевич":185},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012001&tvd=4334012126046&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":108,"voters":1623,"issued":666,"issuedOut":59,"valid":639,"invalid":27,"votes":{"Ануфриев Игорь Вячеславович":31,"Малышев Иван Вячеславович":163,"Сидоров Сергей Владимирович":155,"Фадеев Владимир Иванович":80,"Царьков Дмитрий Николаевич":210},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012001&tvd=4334012126047&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"}]},{"n":2,"name":"Второй районный","voters":5622,"issued":1666,"issuedOut":330,"valid":1577,"invalid":88,"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012002&tvd=4334012124333&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null","candidates":[{"name":"Тихомиров Сергей Анатольевич","votes":771},{"name":"Пахомов Андрей Геннадьевич","votes":268},{"name":"Капитонов Сергей Анатольевич","votes":236},{"name":"Зиновьева Иванна Александровна","votes":196},{"name":"Германович Евгений Борисович","votes":106}],"uiks":[{"uik":110,"voters":1720,"issued":467,"issuedOut":143,"valid":460,"invalid":7,"votes":{"Германович Евгений Борисович":20,"Зиновьева Иванна Александровна":51,"Капитонов Сергей Анатольевич":60,"Пахомов Андрей Геннадьевич":52,"Тихомиров Сергей Анатольевич":277},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012002&tvd=4334012126048&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":111,"voters":1832,"issued":551,"issuedOut":80,"valid":514,"invalid":36,"votes":{"Германович Евгений Борисович":31,"Зиновьева Иванна Александровна":69,"Капитонов Сергей Анатольевич":78,"Пахомов Андрей Геннадьевич":104,"Тихомиров Сергей Анатольевич":232},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012002&tvd=4334012126049&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":112,"voters":2070,"issued":648,"issuedOut":107,"valid":603,"invalid":45,"votes":{"Германович Евгений Борисович":55,"Зиновьева Иванна Александровна":76,"Капитонов Сергей Анатольевич":98,"Пахомов Андрей Геннадьевич":112,"Тихомиров Сергей Анатольевич":262},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012002&tvd=4334012126050&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"}]},{"n":3,"name":"Третий районный","voters":5846,"issued":1775,"issuedOut":109,"valid":1654,"invalid":121,"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012003&tvd=4334012124334&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null","candidates":[{"name":"Якунина Наталья Владимировна","votes":598},{"name":"Шапошников Петр Евгеньевич","votes":349},{"name":"Серова Татьяна Геннадьевна","votes":245},{"name":"Романов Алексей Валерьевич","votes":173},{"name":"Абрамова Марина Викторовна","votes":148},{"name":"Ефремова Наталья Михайловна","votes":95},{"name":"Щетинкин Сергей Анатольевич","votes":46}],"uiks":[{"uik":113,"voters":1896,"issued":571,"issuedOut":43,"valid":535,"invalid":36,"votes":{"Абрамова Марина Викторовна":49,"Ефремова Наталья Михайловна":32,"Романов Алексей Валерьевич":49,"Серова Татьяна Геннадьевна":76,"Шапошников Петр Евгеньевич":111,"Щетинкин Сергей Анатольевич":14,"Якунина Наталья Владимировна":204},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012003&tvd=4334012126051&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":114,"voters":2124,"issued":671,"issuedOut":45,"valid":632,"invalid":39,"votes":{"Абрамова Марина Викторовна":51,"Ефремова Наталья Михайловна":30,"Романов Алексей Валерьевич":56,"Серова Татьяна Геннадьевна":99,"Шапошников Петр Евгеньевич":146,"Щетинкин Сергей Анатольевич":12,"Якунина Наталья Владимировна":238},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012003&tvd=4334012126052&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":115,"voters":1826,"issued":533,"issuedOut":21,"valid":487,"invalid":46,"votes":{"Абрамова Марина Викторовна":48,"Ефремова Наталья Михайловна":33,"Романов Алексей Валерьевич":68,"Серова Татьяна Геннадьевна":70,"Шапошников Петр Евгеньевич":92,"Щетинкин Сергей Анатольевич":20,"Якунина Наталья Владимировна":156},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012003&tvd=4334012126053&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"}]},{"n":4,"name":"Четвёртый районный","voters":6360,"issued":1735,"issuedOut":265,"valid":1664,"invalid":71,"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012004&tvd=4334012124335&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null","candidates":[{"name":"Чернышов Алексей Валериевич","votes":503},{"name":"Бакулина Ирина Анатольевна","votes":424},{"name":"Марков Алексей Викторович","votes":249},{"name":"Сорокин Владимир Петрович","votes":248},{"name":"Краснова Евгения Николаевна","votes":121},{"name":"Роганова Елена Львовна","votes":119}],"uiks":[{"uik":116,"voters":1803,"issued":473,"issuedOut":37,"valid":446,"invalid":27,"votes":{"Бакулина Ирина Анатольевна":134,"Краснова Евгения Николаевна":36,"Марков Алексей Викторович":59,"Роганова Елена Львовна":44,"Сорокин Владимир Петрович":93,"Чернышов Алексей Валериевич":80},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012004&tvd=4334012126054&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":117,"voters":2198,"issued":580,"issuedOut":93,"valid":560,"invalid":20,"votes":{"Бакулина Ирина Анатольевна":174,"Краснова Евгения Николаевна":46,"Марков Алексей Викторович":70,"Роганова Елена Львовна":31,"Сорокин Владимир Петрович":71,"Чернышов Алексей Валериевич":168},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012004&tvd=4334012126055&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":118,"voters":2359,"issued":682,"issuedOut":135,"valid":658,"invalid":24,"votes":{"Бакулина Ирина Анатольевна":116,"Краснова Евгения Николаевна":39,"Марков Алексей Викторович":120,"Роганова Елена Львовна":44,"Сорокин Владимир Петрович":84,"Чернышов Алексей Валериевич":255},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012004&tvd=4334012126056&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"}]},{"n":5,"name":"Пятый районный","voters":5979,"issued":1757,"issuedOut":126,"valid":1659,"invalid":97,"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012005&tvd=4334012124336&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null","candidates":[{"name":"Кудасов Дмитрий Сергеевич","votes":742},{"name":"Калайчев Александр Семенович","votes":400},{"name":"Карпова Светлана Ивановна","votes":368},{"name":"Леснак Андрей Филиппович","votes":149}],"uiks":[{"uik":119,"voters":2159,"issued":570,"issuedOut":32,"valid":544,"invalid":26,"votes":{"Калайчев Александр Семенович":112,"Карпова Светлана Ивановна":131,"Кудасов Дмитрий Сергеевич":253,"Леснак Андрей Филиппович":48},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012005&tvd=4334012126057&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":120,"voters":2121,"issued":646,"issuedOut":46,"valid":617,"invalid":28,"votes":{"Калайчев Александр Семенович":161,"Карпова Светлана Ивановна":143,"Кудасов Дмитрий Сергеевич":256,"Леснак Андрей Филиппович":57},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012005&tvd=4334012126058&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":122,"voters":1699,"issued":541,"issuedOut":48,"valid":498,"invalid":43,"votes":{"Калайчев Александр Семенович":127,"Карпова Светлана Ивановна":94,"Кудасов Дмитрий Сергеевич":233,"Леснак Андрей Филиппович":44},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012005&tvd=4334012126059&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"}]},{"n":6,"name":"Шестой районный","voters":6195,"issued":2340,"issuedOut":458,"valid":2244,"invalid":96,"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012006&tvd=4334012124337&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null","candidates":[{"name":"Зверева Ирина Александровна","votes":801},{"name":"Соколов Сергей Викторович","votes":630},{"name":"Андреева Валентина Александровна","votes":403},{"name":"Катышев Виктор Алексеевич","votes":304},{"name":"Дмитрюк Владимир Алексеевич","votes":106}],"uiks":[{"uik":124,"voters":1738,"issued":475,"issuedOut":54,"valid":441,"invalid":34,"votes":{"Андреева Валентина Александровна":87,"Дмитрюк Владимир Алексеевич":44,"Зверева Ирина Александровна":204,"Катышев Виктор Алексеевич":39,"Соколов Сергей Викторович":67},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012006&tvd=4334012126060&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":126,"voters":346,"issued":252,"issuedOut":85,"valid":239,"invalid":13,"votes":{"Андреева Валентина Александровна":43,"Дмитрюк Владимир Алексеевич":32,"Зверева Ирина Александровна":64,"Катышев Виктор Алексеевич":65,"Соколов Сергей Викторович":35},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012006&tvd=4334012126061&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":128,"voters":2594,"issued":944,"issuedOut":137,"valid":922,"invalid":22,"votes":{"Андреева Валентина Александровна":102,"Дмитрюк Владимир Алексеевич":13,"Зверева Ирина Александровна":253,"Катышев Виктор Алексеевич":102,"Соколов Сергей Викторович":452},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012006&tvd=4334012126062&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":129,"voters":662,"issued":242,"issuedOut":60,"valid":226,"invalid":16,"votes":{"Андреева Валентина Александровна":48,"Дмитрюк Владимир Алексеевич":11,"Зверева Ирина Александровна":96,"Катышев Виктор Алексеевич":35,"Соколов Сергей Викторович":36},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012006&tvd=4334012126063&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":130,"voters":304,"issued":170,"issuedOut":50,"valid":164,"invalid":6,"votes":{"Андреева Валентина Александровна":49,"Дмитрюк Владимир Алексеевич":3,"Зверева Ирина Александровна":76,"Катышев Виктор Алексеевич":28,"Соколов Сергей Викторович":8},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012006&tvd=4334012126064&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":131,"voters":134,"issued":50,"issuedOut":20,"valid":50,"invalid":0,"votes":{"Андреева Валентина Александровна":21,"Дмитрюк Владимир Алексеевич":2,"Зверева Ирина Александровна":12,"Катышев Виктор Алексеевич":7,"Соколов Сергей Викторович":8},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012006&tvd=4334012126065&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":132,"voters":151,"issued":78,"issuedOut":11,"valid":75,"invalid":3,"votes":{"Андреева Валентина Александровна":18,"Дмитрюк Владимир Алексеевич":0,"Зверева Ирина Александровна":27,"Катышев Виктор Алексеевич":19,"Соколов Сергей Викторович":11},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012006&tvd=4334012126066&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":133,"voters":266,"issued":129,"issuedOut":41,"valid":127,"invalid":2,"votes":{"Андреева Валентина Александровна":35,"Дмитрюк Владимир Алексеевич":1,"Зверева Ирина Александровна":69,"Катышев Виктор Алексеевич":9,"Соколов Сергей Викторович":13},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012006&tvd=4334012126067&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"}]},{"n":7,"name":"Седьмой районный","voters":5556,"issued":2150,"issuedOut":430,"valid":2054,"invalid":96,"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012007&tvd=4334012124338&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null","candidates":[{"name":"Фирсов Алексей Александрович","votes":639},{"name":"Каяшов Владимир Анатольевич","votes":567},{"name":"Барашенков Максим Юрьевич","votes":336},{"name":"Кузнецова Ирина Алексеевна","votes":225},{"name":"Судаков Николай Александрович","votes":193},{"name":"Мустафин Рафаэль Вялиахметович","votes":94}],"uiks":[{"uik":121,"voters":1603,"issued":363,"issuedOut":44,"valid":348,"invalid":15,"votes":{"Барашенков Максим Юрьевич":61,"Каяшов Владимир Анатольевич":79,"Кузнецова Ирина Алексеевна":27,"Мустафин Рафаэль Вялиахметович":12,"Судаков Николай Александрович":22,"Фирсов Алексей Александрович":147},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012007&tvd=4334012126068&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":123,"voters":1666,"issued":484,"issuedOut":53,"valid":464,"invalid":20,"votes":{"Барашенков Максим Юрьевич":119,"Каяшов Владимир Анатольевич":41,"Кузнецова Ирина Алексеевна":43,"Мустафин Рафаэль Вялиахметович":16,"Судаков Николай Александрович":27,"Фирсов Алексей Александрович":218},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012007&tvd=4334012126069&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":127,"voters":113,"issued":76,"issuedOut":21,"valid":73,"invalid":3,"votes":{"Барашенков Максим Юрьевич":27,"Каяшов Владимир Анатольевич":31,"Кузнецова Ирина Алексеевна":8,"Мустафин Рафаэль Вялиахметович":1,"Судаков Николай Александрович":4,"Фирсов Алексей Александрович":2},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012007&tvd=4334012126070&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":134,"voters":441,"issued":276,"issuedOut":62,"valid":254,"invalid":22,"votes":{"Барашенков Максим Юрьевич":45,"Каяшов Владимир Анатольевич":53,"Кузнецова Ирина Алексеевна":38,"Мустафин Рафаэль Вялиахметович":15,"Судаков Николай Александрович":21,"Фирсов Алексей Александрович":82},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012007&tvd=4334012126071&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":136,"voters":242,"issued":96,"issuedOut":19,"valid":93,"invalid":3,"votes":{"Барашенков Максим Юрьевич":24,"Каяшов Владимир Анатольевич":25,"Кузнецова Ирина Алексеевна":14,"Мустафин Рафаэль Вялиахметович":7,"Судаков Николай Александрович":14,"Фирсов Алексей Александрович":9},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012007&tvd=4334012126072&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":138,"voters":394,"issued":201,"issuedOut":79,"valid":197,"invalid":4,"votes":{"Барашенков Максим Юрьевич":21,"Каяшов Владимир Анатольевич":50,"Кузнецова Ирина Алексеевна":17,"Мустафин Рафаэль Вялиахметович":17,"Судаков Николай Александрович":32,"Фирсов Алексей Александрович":60},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012007&tvd=4334012126073&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":139,"voters":120,"issued":74,"issuedOut":13,"valid":70,"invalid":4,"votes":{"Барашенков Максим Юрьевич":7,"Каяшов Владимир Анатольевич":42,"Кузнецова Ирина Алексеевна":6,"Мустафин Рафаэль Вялиахметович":2,"Судаков Николай Александрович":10,"Фирсов Алексей Александрович":3},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012007&tvd=4334012126075&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":140,"voters":91,"issued":70,"issuedOut":14,"valid":68,"invalid":2,"votes":{"Барашенков Максим Юрьевич":4,"Каяшов Владимир Анатольевич":54,"Кузнецова Ирина Алексеевна":3,"Мустафин Рафаэль Вялиахметович":3,"Судаков Николай Александрович":3,"Фирсов Алексей Александрович":1},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012007&tvd=4334012126074&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":141,"voters":165,"issued":100,"issuedOut":19,"valid":96,"invalid":4,"votes":{"Барашенков Максим Юрьевич":7,"Каяшов Владимир Анатольевич":49,"Кузнецова Ирина Алексеевна":18,"Мустафин Рафаэль Вялиахметович":4,"Судаков Николай Александрович":6,"Фирсов Алексей Александрович":12},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012007&tvd=4334012126076&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":142,"voters":271,"issued":138,"issuedOut":22,"valid":128,"invalid":10,"votes":{"Барашенков Максим Юрьевич":6,"Каяшов Владимир Анатольевич":66,"Кузнецова Ирина Алексеевна":9,"Мустафин Рафаэль Вялиахметович":4,"Судаков Николай Александрович":10,"Фирсов Алексей Александрович":33},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012007&tvd=4334012126077&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":145,"voters":450,"issued":272,"issuedOut":84,"valid":263,"invalid":9,"votes":{"Барашенков Максим Юрьевич":15,"Каяшов Владимир Анатольевич":77,"Кузнецова Ирина Алексеевна":42,"Мустафин Рафаэль Вялиахметович":13,"Судаков Николай Александрович":44,"Фирсов Алексей Александрович":72},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012007&tvd=4334012126078&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"}]},{"n":8,"name":"Восьмой районный","voters":5300,"issued":1989,"issuedOut":381,"valid":1857,"invalid":132,"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012008&tvd=4334012124339&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null","candidates":[{"name":"Перегудов Вячеслав Геннадьевич","votes":786},{"name":"Ковалев Валерий Александрович","votes":433},{"name":"Кузнецова Валентина Николаевна","votes":273},{"name":"Куприянова Наталья Валерьевна","votes":245},{"name":"Кудинов Владислав Викторович","votes":120}],"uiks":[{"uik":109,"voters":1895,"issued":555,"issuedOut":46,"valid":517,"invalid":38,"votes":{"Ковалев Валерий Александрович":87,"Кудинов Владислав Викторович":57,"Кузнецова Валентина Николаевна":68,"Куприянова Наталья Валерьевна":68,"Перегудов Вячеслав Геннадьевич":237},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012008&tvd=4334012126079&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":125,"voters":2210,"issued":668,"issuedOut":65,"valid":623,"invalid":45,"votes":{"Ковалев Валерий Александрович":125,"Кудинов Владислав Викторович":22,"Кузнецова Валентина Николаевна":63,"Куприянова Наталья Валерьевна":101,"Перегудов Вячеслав Геннадьевич":312},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012008&tvd=4334012126080&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":135,"voters":460,"issued":305,"issuedOut":119,"valid":288,"invalid":17,"votes":{"Ковалев Валерий Александрович":65,"Кудинов Владислав Викторович":21,"Кузнецова Валентина Николаевна":81,"Куприянова Наталья Валерьевна":33,"Перегудов Вячеслав Геннадьевич":88},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012008&tvd=4334012126081&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":137,"voters":100,"issued":79,"issuedOut":25,"valid":75,"invalid":4,"votes":{"Ковалев Валерий Александрович":39,"Кудинов Владислав Викторович":2,"Кузнецова Валентина Николаевна":10,"Куприянова Наталья Валерьевна":4,"Перегудов Вячеслав Геннадьевич":20},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012008&tvd=4334012126082&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":143,"voters":429,"issued":237,"issuedOut":82,"valid":217,"invalid":20,"votes":{"Ковалев Валерий Александрович":68,"Кудинов Владислав Викторович":8,"Кузнецова Валентина Николаевна":33,"Куприянова Наталья Валерьевна":16,"Перегудов Вячеслав Геннадьевич":92},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012008&tvd=4334012126083&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"},{"uik":144,"voters":206,"issued":145,"issuedOut":44,"valid":137,"invalid":8,"votes":{"Ковалев Валерий Александрович":49,"Кудинов Владислав Викторович":10,"Кузнецова Валентина Николаевна":18,"Куприянова Наталья Валерьевна":23,"Перегудов Вячеслав Геннадьевич":37},"url":"http://old.izbirkom.ru/region/izbirkom?action=show&root=334012008&tvd=4334012126084&vrn=4334012124326&prver=1&pronetvd=null&region=33&sub_region=33&type=426&report_mode=null"}]}]};
+
+const nf = new Intl.NumberFormat("ru-RU");
+const pf = new Intl.NumberFormat("ru-RU", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const fmt = n => nf.format(n);
+const pct = (a, b) => b ? pf.format(a / b * 100) + " %" : "—";
+const ballots = o => o.valid + o.invalid;
+const color = key => `var(--s-${key})`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const $ = id => document.getElementById(id);
+const PARTIES = DATA.parties;
+const shortName = key => PARTIES.find(p => p.key === key).short;
+const votesWord = n => {
+  const m10 = n % 10, m100 = n % 100;
+  const w = m10 === 1 && m100 !== 11 ? "голос" : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? "голоса" : "голосов";
+  return `${fmt(n)} ${w}`;
+};
+const initials = full => { const [s, n, p] = full.split(" "); return `${s} ${n ? n[0] + "." : ""}${p ? p[0] + "." : ""}`; };
+
+/* Сводка */
+(function summary() {
+  const t = DATA.total;
+  const rows = [
+    ["1", "Избирателей в списках", fmt(t.voters), ""],
+    ["5+6", "Выдано бюллетеней (явка)", fmt(t.issued), pct(t.issued, t.voters), true],
+    ["6", "из них вне помещения для голосования", fmt(t.issuedOut), pct(t.issuedOut, t.issued) + " выданных"],
+    ["11", "Действительных бюллетеней", fmt(t.valid), ""],
+    ["10", "Недействительных бюллетеней", fmt(t.invalid), pct(t.invalid, ballots(t))],
+  ];
+  $("protocol").innerHTML = rows.map(([ln, label, v, extra, key]) =>
+    `<li${key ? ' class="key"' : ""}><span class="ln num">${ln}</span><span>${label}</span>` +
+    `<span class="val num">${v}${extra ? `<small>${extra}</small>` : ""}</span></li>`).join("");
+
+  const sorted = [...PARTIES].sort((a, b) => b.votes - a.votes);
+  $("lede").innerHTML = `На выборы пришёл каждый третий избиратель района: <strong>${pct(t.issued, t.voters)}</strong>. ` +
+    `По партийным спискам первое место заняла <strong>${sorted[0].short}</strong> (${pct(sorted[0].votes, ballots(t))}), ` +
+    `второе — <strong>«${sorted[1].short}»</strong> (${pct(sorted[1].votes, ballots(t))}). Разница составила ${votesWord(sorted[0].votes - sorted[1].votes)}.`;
+  $("party-src").href = DATA.partyUrl;
+})();
+
+/* Партии */
+(function parties() {
+  const t = DATA.total, base = ballots(t);
+  const sorted = [...PARTIES].sort((a, b) => b.votes - a.votes);
+  const max = sorted[0].votes / base;
+  $("party-chart").innerHTML = sorted.map(p => `
+    <div class="party-row">
+      <div class="name"><span class="swatch" style="background:${color(p.key)}"></span><span>${p.short}</span></div>
+      <div class="bar-track"><div class="bar" style="width:${(p.votes / base / max * 100).toFixed(2)}%;background:${color(p.key)}"></div></div>
+      <div class="pct num">${pct(p.votes, base)}</div>
+      <div class="votes"><span class="num">${votesWord(p.votes)}</span> · <span class="full">${esc(p.full)}</span></div>
+    </div>`).join("");
+
+  // где какая партия победила
+  const wins = {};
+  for (const u of DATA.uiks) {
+    const top = Object.entries(u.votes).sort((a, b) => b[1] - a[1])[0][0];
+    wins[top] = (wins[top] || 0) + 1;
+  }
+  const parts = Object.entries(wins).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${shortName(k)} — на ${n}`);
+  $("party-callout").innerHTML = `Партии-лидеры на участках из 40: ${parts.join(", ")}. ` +
+    `Результаты ЛДПР и «Единой России» по району почти равны, но по участкам их сторонники распределены неравномерно, это видно в разделе ниже.`;
+})();
+
+/* Участки */
+const uikState = { sort: "uik", district: "all", view: "chart" };
+
+(function uikControls() {
+  const sortOpts = [["uik", "По номеру УИК"], ["turnout", "По явке"],
+    ...[...PARTIES].sort((a, b) => b.votes - a.votes).map(p => [p.key, `По доле: ${p.short}`])];
+  $("uik-sort").innerHTML = sortOpts.map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
+  $("uik-district").innerHTML = `<option value="all">Все округа</option>` +
+    DATA.districts.map(d => `<option value="${d.n}">№${d.n} · ${d.name}</option>`).join("");
+  $("uik-legend").innerHTML = [...PARTIES].sort((a, b) => b.votes - a.votes)
+    .map(p => `<span><i class="swatch" style="background:${color(p.key)}"></i>${p.short}</span>`).join("") +
+    `<span><i class="swatch" style="background:var(--invalid)"></i>Недействительные</span>`;
+  $("uik-sort").addEventListener("change", e => { uikState.sort = e.target.value; renderUiks(); });
+  $("uik-district").addEventListener("change", e => { uikState.district = e.target.value; renderUiks(); });
+  const setView = v => {
+    uikState.view = v;
+    $("view-chart").setAttribute("aria-pressed", v === "chart");
+    $("view-table").setAttribute("aria-pressed", v === "table");
+    $("uik-chart").hidden = v !== "chart";
+    $("uik-legend").hidden = v !== "chart";
+    $("uik-table").hidden = v !== "table";
+  };
+  $("view-chart").addEventListener("click", () => setView("chart"));
+  $("view-table").addEventListener("click", () => setView("table"));
+})();
+
+const PARTY_ORDER = [...PARTIES].sort((a, b) => b.votes - a.votes).map(p => p.key);
+
+function renderUiks() {
+  let list = DATA.uiks.filter(u => uikState.district === "all" || u.district === +uikState.district);
+  const s = uikState.sort;
+  const key = s === "uik" ? u => u.uik : s === "turnout" ? u => -u.issued / u.voters : u => -u.votes[s] / ballots(u);
+  list = [...list].sort((a, b) => key(a) - key(b));
+  const maxTurnout = Math.max(...DATA.uiks.map(u => u.issued / u.voters));
+
+  $("uik-chart").innerHTML =
+    `<div class="uik-row head"><div>УИК</div><div>Явка</div><div class="stack-cell">Голоса, доля бюллетеней</div></div>` +
+    list.map(u => {
+      const base = ballots(u);
+      const segs = PARTY_ORDER.map(k => [k, u.votes[k]]).concat([["invalid", u.invalid]]);
+      const top = Object.entries(u.votes).sort((a, b) => b[1] - a[1])[0];
+      return `<div class="uik-row">
+        <div class="uik-id"><a href="${esc(u.url)}" target="_blank" rel="noopener" title="Протокол УИК №${u.uik} на сайте ЦИК">№${u.uik}</a><small>округ ${u.district}</small></div>
+        <div class="turnout"><span class="num">${pct(u.issued, u.voters)}</span>
+          <span class="mini"><i style="width:${(u.issued / u.voters / maxTurnout * 100).toFixed(1)}%"></i></span></div>
+        <div class="stack-cell">
+          <div class="stack">${segs.map(([k, v]) => `<span tabindex="0" data-uik="${u.uik}" data-k="${k}" style="flex:${v} 1 0;background:${k === "invalid" ? "var(--invalid)" : color(k)}" aria-label="${k === "invalid" ? "Недействительные" : shortName(k)}: ${fmt(v)}, ${pct(v, base)}"></span>`).join("")}</div>
+          <div class="stack-note">Лидер: ${shortName(top[0])}, ${pct(top[1], base)} · ${fmt(u.voters)} избирателей</div>
+        </div>
+      </div>`;
+    }).join("");
+
+  const totalRow = (() => {
+    const t = list.reduce((a, u) => {
+      a.voters += u.voters; a.issued += u.issued; a.valid += u.valid; a.invalid += u.invalid;
+      for (const k of PARTY_ORDER) a.votes[k] = (a.votes[k] || 0) + u.votes[k];
+      return a;
+    }, { voters: 0, issued: 0, valid: 0, invalid: 0, votes: {} });
+    return t;
+  })();
+  const row = (label, u, cls = "") => {
+    const base = ballots(u);
+    const top = Object.entries(u.votes).sort((a, b) => b[1] - a[1])[0][0];
+    return `<tr class="${cls}"><td>${label}</td><td>${fmt(u.voters)}</td><td>${pct(u.issued, u.voters)}</td>` +
+      PARTY_ORDER.map(k => `<td class="${k === top ? "lead" : ""}">${fmt(u.votes[k])} <small>${pct(u.votes[k], base)}</small></td>`).join("") +
+      `<td>${fmt(u.invalid)}</td></tr>`;
+  };
+  $("uik-table").innerHTML = `<table><thead><tr><th>УИК</th><th>Избирателей</th><th>Явка</th>` +
+    PARTY_ORDER.map(k => `<th>${shortName(k)}</th>`).join("") + `<th>Недейств.</th></tr></thead><tbody>` +
+    list.map(u => row(`<a href="${esc(u.url)}" target="_blank" rel="noopener">№${u.uik}</a>`, u)).join("") +
+    row(uikState.district === "all" ? "Итого" : `Итого, округ ${uikState.district}`, totalRow, "total") +
+    `</tbody></table>`;
+}
+
+/* Подсказка */
+(function tooltip() {
+  const tip = $("tip");
+  const show = (el, x, y) => {
+    const u = DATA.uiks.find(u => u.uik === +el.dataset.uik), k = el.dataset.k;
+    const v = k === "invalid" ? u.invalid : u.votes[k];
+    tip.innerHTML = `<b>УИК №${u.uik} · ${k === "invalid" ? "Недействительные" : shortName(k)}</b>${fmt(v)} бюлл. · ${pct(v, ballots(u))}`;
+    tip.hidden = false;
+    const r = tip.getBoundingClientRect();
+    tip.style.left = Math.max(8, Math.min(x + 12, innerWidth - r.width - 8)) + "px";
+    tip.style.top = Math.max(8, y - r.height - 12) + "px";
+  };
+  const host = $("uik-chart");
+  host.addEventListener("pointermove", e => {
+    const el = e.target.closest(".stack > span");
+    if (el) show(el, e.clientX, e.clientY); else tip.hidden = true;
+  });
+  host.addEventListener("pointerleave", () => { tip.hidden = true; });
+  host.addEventListener("focusin", e => {
+    const el = e.target.closest(".stack > span");
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    show(el, r.left + r.width / 2, r.top);
+  });
+  host.addEventListener("focusout", () => { tip.hidden = true; });
+  addEventListener("scroll", () => { tip.hidden = true; }, { passive: true });
+})();
+
+/* Округа */
+let currentDistrict = 1;
+function renderDistrictTabs() {
+  $("district-tabs").innerHTML = DATA.districts.map(d =>
+    `<button type="button" role="tab" id="dtab-${d.n}" aria-selected="${d.n === currentDistrict}" aria-controls="district-panel" title="${d.name}">№${d.n}</button>`).join("");
+  $("district-tabs").querySelectorAll("button").forEach((b, i) =>
+    b.addEventListener("click", () => { currentDistrict = DATA.districts[i].n; renderDistrictTabs(); renderDistrict(); }));
+}
+function renderDistrict() {
+  const d = DATA.districts.find(d => d.n === currentDistrict);
+  const base = ballots(d);
+  const max = d.candidates[0].votes;
+  const lead = d.candidates[0], second = d.candidates[1];
+  $("district-panel").setAttribute("aria-labelledby", `dtab-${d.n}`);
+  $("district-panel").innerHTML = `
+    <div class="district-head">
+      <h3>Округ №${d.n} · ${d.name}</h3>
+      <a href="${esc(d.url)}" target="_blank" rel="noopener">Протокол окружной комиссии</a>
+    </div>
+    <div class="facts">
+      <span>Участки: <b>${d.uiks.map(u => u.uik).join(", ")}</b></span>
+      <span>Избирателей: <b>${fmt(d.voters)}</b></span>
+      <span>Явка: <b>${pct(d.issued, d.voters)}</b></span>
+      <span>Недействительных: <b>${fmt(d.invalid)}</b></span>
+      <span>Кандидатов: <b>${d.candidates.length}</b></span>
+    </div>
+    <div class="cands">${d.candidates.map((c, i) => `
+      <div class="cand-row${i === 0 ? " first" : ""}">
+        <div class="cname">${esc(c.name)}${i === 0 ? ' · <span class="muted">лидер округа</span>' : ""}<div class="cvotes"><span class="num">${votesWord(c.votes)}</span></div></div>
+        <div class="bar-track"><div class="bar" style="width:${(c.votes / max * 100).toFixed(2)}%"></div></div>
+        <div class="pct num">${pct(c.votes, base)}</div>
+      </div>`).join("")}
+    </div>
+    <p class="muted" style="margin:14px 0 0">Отрыв лидера от второго места: ${votesWord(lead.votes - second.votes)}.</p>
+    <div class="table-wrap"><table><thead><tr><th>Кандидат</th>${d.uiks.map(u => `<th><a href="${esc(u.url)}" target="_blank" rel="noopener">УИК №${u.uik}</a></th>`).join("")}<th>Всего</th></tr></thead><tbody>
+      ${d.candidates.map(c => {
+        return `<tr><td>${esc(initials(c.name))}</td>` + d.uiks.map(u => {
+          const best = Math.max(...Object.values(u.votes));
+          return `<td class="${u.votes[c.name] === best ? "lead" : ""}">${fmt(u.votes[c.name])} <small>${pct(u.votes[c.name], ballots(u))}</small></td>`;
+        }).join("") + `<td class="lead">${fmt(c.votes)}</td></tr>`;
+      }).join("")}
+      <tr class="total"><td>Явка</td>${d.uiks.map(u => `<td>${pct(u.issued, u.voters)}</td>`).join("")}<td>${pct(d.issued, d.voters)}</td></tr>
+    </tbody></table></div>`;
+}
+
+renderUiks();
+renderDistrictTabs();
+renderDistrict();
+</script>
+</body>
+</html>

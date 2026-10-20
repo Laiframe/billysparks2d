@@ -1,0 +1,567 @@
+<title>Выборы в Кольчугино 2011</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Итоги выборов в Совет народных депутатов Кольчугинского района IV созыва 13 марта 2011 года по каждому участку и округу.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Mono&family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Serif:wght@400;700&display=swap">
+<style>
+/* Layout: одна колонка ~ 960px; сводка-«протокол» → партии → участки → округа → о данных. */
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --ink: #16191d;
+  --ink-2: #4b525b;
+  --ink-3: #737b85;
+  --rule: #dde1e5;
+  --rule-strong: #b9c0c7;
+  --accent: #9a5523;       /* латунь: Кольчугино — город цветного металла */
+  --accent-soft: #f3e7dc;
+  --invalid: #b3b8be;
+  --s-ldpr: #2a78d6;
+  --s-er: #eb6834;
+  --s-yabloko: #1baf7a;
+  --s-kprf: #eda100;
+  --s-sr: #e87ba4;
+  --cand: #2a78d6;
+  --f-display: "PT Serif", Georgia, "Times New Roman", serif;
+  --f-body: "PT Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-mono: "PT Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131518; --surface: #1b1e22; --ink: #eef0f2; --ink-2: #bcc2c9; --ink-3: #8d949c;
+    --rule: #2c3036; --rule-strong: #454b53; --accent: #d9935c; --accent-soft: #33261c;
+    --invalid: #5d636b;
+    --s-ldpr: #3987e5; --s-er: #d95926; --s-yabloko: #199e70; --s-kprf: #c98500; --s-sr: #d55181;
+    --cand: #3987e5;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131518; --surface: #1b1e22; --ink: #eef0f2; --ink-2: #bcc2c9; --ink-3: #8d949c;
+  --rule: #2c3036; --rule-strong: #454b53; --accent: #d9935c; --accent-soft: #33261c;
+  --invalid: #5d636b;
+  --s-ldpr: #3987e5; --s-er: #d95926; --s-yabloko: #199e70; --s-kprf: #c98500; --s-sr: #d55181;
+  --cand: #3987e5;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 16px/1.5 var(--f-body);
+  -webkit-text-size-adjust: 100%;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--bg);
+}
+.wrap {
+  max-width: 980px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.muted { color: var(--ink-2); }
+.eyebrow {
+  font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3);
+}
+
+/* Шапка */
+header.top { padding-block: 40px 28px; border-bottom: 1px solid var(--rule); }
+header.top h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.12; margin-top: 10px; max-width: 22ch; }
+header.top .sub { margin-top: 12px; font-size: 18px; color: var(--ink-2); }
+.lede { margin-top: 20px; max-width: 64ch; font-size: 17px; }
+.lede strong { color: var(--ink); }
+
+/* Сводка в виде строк протокола */
+.protocol {
+  margin-top: 28px; background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 6px; overflow: hidden;
+}
+.protocol-head {
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 12px 16px; border-bottom: 1px solid var(--rule); font-size: 13px; color: var(--ink-3);
+}
+.protocol ol { list-style: none; margin: 0; padding: 0; }
+.protocol li {
+  display: grid; grid-template-columns: 2.5em 1fr auto; gap: 12px; align-items: baseline;
+  padding: 9px 16px; border-bottom: 1px dashed var(--rule);
+}
+.protocol li:last-child { border-bottom: 0; }
+.protocol .ln { color: var(--ink-3); font-size: 13px; }
+.protocol .val { font-size: 17px; text-align: right; }
+.protocol .val small { color: var(--ink-3); font-size: 13px; margin-left: 8px; }
+.protocol li.key { background: var(--accent-soft); }
+.protocol li.key .val { font-weight: 700; }
+
+/* Навигация */
+nav.sections {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--bg); border-bottom: 1px solid var(--rule);
+}
+nav.sections .wrap { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+nav.sections a {
+  flex: none; padding: 12px 12px; color: var(--ink-2); text-decoration: none; font-weight: 700;
+  font-size: 15px; border-bottom: 2px solid transparent;
+}
+nav.sections a:hover { color: var(--ink); border-bottom-color: var(--rule-strong); }
+
+section { padding-block: 44px 8px; scroll-margin-top: 48px; }
+section > .wrap > h2 { font-size: clamp(24px, 3.6vw, 32px); }
+.section-intro { margin-top: 8px; max-width: 64ch; color: var(--ink-2); }
+
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; }
+
+/* Партии */
+.parties { margin-top: 24px; padding: 20px 16px 12px; }
+.party-row {
+  display: grid; grid-template-columns: minmax(0, 13em) minmax(0, 1fr) 5.2em; gap: 6px 14px;
+  align-items: center; padding-block: 8px;
+}
+.party-row .name { font-weight: 700; display: flex; align-items: center; gap: 8px; min-width: 0; }
+.swatch { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.party-row .bar-track { height: 22px; position: relative; }
+.party-row .bar { height: 100%; border-radius: 0 4px 4px 0; }
+.party-row .pct { text-align: right; font-size: 17px; }
+.party-row .votes { grid-column: 2 / 4; font-size: 13px; color: var(--ink-3); margin-top: -4px; }
+.party-row .full { font-weight: 400; font-size: 13px; color: var(--ink-3); }
+.callout {
+  margin-top: 16px; padding: 14px 16px; border-left: 3px solid var(--accent);
+  background: var(--accent-soft); max-width: 70ch;
+}
+
+/* Участки */
+.controls {
+  display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: end; margin-top: 20px;
+}
+.controls label { display: grid; gap: 4px; font-size: 13px; color: var(--ink-3); }
+select, .seg button {
+  font: inherit; font-size: 15px; color: var(--ink); background: var(--surface);
+  border: 1px solid var(--rule-strong); border-radius: 5px; padding: 6px 10px;
+}
+.seg { display: inline-flex; }
+.seg button { cursor: pointer; border-radius: 0; }
+.seg button:first-child { border-radius: 5px 0 0 5px; }
+.seg button:last-child { border-radius: 0 5px 5px 0; margin-left: -1px; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; font-size: 14px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+.uik-list { margin-top: 12px; }
+.uik-row {
+  display: grid; grid-template-columns: 5.5em 8.5em minmax(0, 1fr); gap: 14px;
+  align-items: center; padding: 10px 16px; border-bottom: 1px solid var(--rule);
+}
+.uik-row:last-child { border-bottom: 0; }
+.uik-row.head { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); padding-block: 10px; }
+.uik-id { font-weight: 700; }
+.uik-id a { color: inherit; text-decoration: none; }
+.uik-id a:hover { color: var(--accent); text-decoration: underline; }
+.uik-id small { display: block; font-weight: 400; color: var(--ink-3); font-size: 12px; }
+.turnout { display: grid; gap: 4px; font-size: 15px; }
+.turnout .mini { height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.turnout .mini i { display: block; height: 100%; background: var(--ink-2); }
+.stack { display: flex; gap: 2px; height: 22px; }
+.stack > span { height: 100%; min-width: 2px; }
+.stack > span:first-child { border-radius: 4px 0 0 4px; }
+.stack > span:last-child { border-radius: 0 4px 4px 0; }
+.stack-note { font-size: 13px; color: var(--ink-3); margin-top: 4px; }
+
+.table-wrap { overflow-x: auto; margin-top: 12px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { padding: 8px 10px; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+th { font-weight: 700; color: var(--ink-2); font-size: 13px; vertical-align: bottom; }
+th:first-child, td:first-child { text-align: left; }
+td { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+td.lead { font-weight: 700; color: var(--ink); }
+tr.total td { font-weight: 700; border-top: 2px solid var(--rule-strong); }
+td small { color: var(--ink-3); font-size: 12px; }
+
+/* Округа */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+.tabs button {
+  font: inherit; font-weight: 700; cursor: pointer; min-width: 44px; padding: 8px 12px;
+  border: 1px solid var(--rule-strong); background: var(--surface); color: var(--ink); border-radius: 5px;
+}
+.tabs button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.district { margin-top: 16px; padding: 20px 16px; }
+.district-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; align-items: baseline; }
+.district-head h3 { font-size: 24px; }
+.facts { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; font-size: 14px; color: var(--ink-2); }
+.facts b { color: var(--ink); font-family: var(--f-mono); font-weight: 400; }
+.cands { margin-top: 18px; }
+.cand-row {
+  display: grid; grid-template-columns: minmax(0, 17em) minmax(0, 1fr) 4.6em; gap: 4px 14px;
+  align-items: center; padding-block: 6px;
+}
+.cand-row .bar-track { height: 18px; }
+.cand-row .bar { height: 100%; background: var(--cand); border-radius: 0 4px 4px 0; opacity: .55; }
+.cand-row.first .bar { opacity: 1; }
+.cand-row.first .cname { font-weight: 700; }
+.cand-row .pct { text-align: right; }
+.cand-row .cvotes { font-size: 13px; color: var(--ink-3); }
+.cand-row .cname { min-width: 0; }
+
+/* О данных */
+.about { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); margin-top: 20px; }
+.about .card { padding: 18px 16px; }
+.about h3 { font-size: 19px; margin-bottom: 8px; }
+.about p, .about ul { margin: 0 0 10px; color: var(--ink-2); }
+.about ul { padding-left: 18px; }
+.check { display: inline-flex; gap: 6px; align-items: center; font-weight: 700; color: var(--ink); }
+.check::before {
+  content: "✓"; display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--s-yabloko); color: var(--surface); font-size: 13px;
+}
+
+footer { padding-block: 40px 48px; color: var(--ink-3); font-size: 14px; }
+
+/* Подсказка */
+#tip {
+  position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: var(--bg);
+  padding: 8px 10px; border-radius: 5px; font-size: 13px; line-height: 1.4; max-width: 260px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+}
+#tip b { display: block; }
+
+@media (max-width: 640px) {
+  .party-row { grid-template-columns: minmax(0, 1fr) 4.6em; }
+  .party-row .name { grid-column: 1 / 3; }
+  .party-row .bar-track { grid-column: 1 / 2; }
+  .party-row .votes { grid-column: 1 / 3; }
+  .uik-row { grid-template-columns: 5em minmax(0, 1fr); }
+  .uik-row .stack-cell { grid-column: 1 / 3; }
+  .uik-row.head .stack-cell { display: none; }
+  .cand-row { grid-template-columns: minmax(0, 1fr) 4.2em; }
+  .cand-row .cname { grid-column: 1 / 3; }
+  .protocol li { grid-template-columns: 2em 1fr; }
+  .protocol .val { grid-column: 2; text-align: left; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .bar { transition: width .4s ease; }
+}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Кольчугинский район · Владимирская область</div>
+    <h1>Выборы в Совет народных депутатов Кольчугинского района</h1>
+    <div class="sub">IV созыв · 13 марта 2011 года · смешанная система: партийные списки и 8 округов</div>
+    <p class="lede" id="lede"></p>
+
+    <div class="protocol" aria-label="Сводный протокол по единому округу">
+      <div class="protocol-head">
+        <span>Сводный протокол ТИК · единый округ</span>
+        <span>строки протокола</span>
+      </div>
+      <ol id="protocol"></ol>
+    </div>
+  </div>
+</header>
+
+<nav class="sections" aria-label="Разделы">
+  <div class="wrap">
+    <a href="#parties">Партии</a>
+    <a href="#uiks">Участки</a>
+    <a href="#districts">Округа</a>
+    <a href="#about">О данных</a>
+  </div>
+</nav>
+
+<main>
+  <section id="parties">
+    <div class="wrap">
+      <h2>Голосование за партийные списки</h2>
+      <p class="section-intro">Единый избирательный округ, все 40 участков. Доля считается от числа бюллетеней, найденных в ящиках для голосования, то есть с учётом недействительных, как на сайте избиркома.</p>
+      <div class="card parties" id="party-chart"></div>
+      <div class="callout" id="party-callout"></div>
+    </div>
+  </section>
+
+  <section id="uiks">
+    <div class="wrap">
+      <h2>Результаты по участкам</h2>
+      <p class="section-intro">Явка и распределение голосов за партии на каждой участковой комиссии (УИК). Наведите на полосу, чтобы увидеть точные цифры, или переключитесь на таблицу.</p>
+      <div class="controls">
+        <label for="uik-sort">Сортировка
+          <select id="uik-sort"></select>
+        </label>
+        <label for="uik-district">Округ
+          <select id="uik-district"></select>
+        </label>
+        <div class="seg" role="group" aria-label="Вид">
+          <button type="button" id="view-chart" aria-pressed="true">Диаграмма</button>
+          <button type="button" id="view-table" aria-pressed="false">Таблица</button>
+        </div>
+      </div>
+      <div class="legend" id="uik-legend"></div>
+      <div class="card uik-list" id="uik-chart"></div>
+      <div class="card table-wrap" id="uik-table" hidden></div>
+    </div>
+  </section>
+
+  <section id="districts">
+    <div class="wrap">
+      <h2>Голосование по округам</h2>
+      <p class="section-intro">Вторая часть совета избиралась по восьми округам. Ниже показаны кандидаты в порядке убывания голосов. Сколько мандатов приходилось на каждый округ, в исходных данных не указано, поэтому отмечен только лидер.</p>
+      <div class="tabs" role="tablist" id="district-tabs" aria-label="Округ"></div>
+      <div class="card district" id="district-panel" role="tabpanel"></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <h2>О данных</h2>
+      <div class="about">
+        <div class="card">
+          <h3>Источник</h3>
+          <p>Протоколы участковых и территориальной комиссий с сайта ЦИК России (old.izbirkom.ru), выборы <span class="num">vrn 4334012124326</span>. У каждого участка на этой странице есть ссылка на его протокол.</p>
+          <p><a id="party-src" href="#" target="_blank" rel="noopener">Сводный протокол ТИК по единому округу</a></p>
+        </div>
+        <div class="card">
+          <h3>Сверка</h3>
+          <p><span class="check">Все суммы сходятся</span></p>
+          <ul>
+            <li>Голоса каждой партии, сложенные по 40 УИК, равны итогу ТИК.</li>
+            <li>Голоса каждого кандидата, сложенные по участкам округа, равны итогу окружной комиссии.</li>
+            <li>Сумма голосов в каждом протоколе равна числу действительных бюллетеней.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Как считались проценты</h3>
+          <p>Явка: выданные бюллетени (в помещении и вне его), делённые на число избирателей в списке.</p>
+          <p>Доля партии или кандидата: голоса, делённые на сумму действительных и недействительных бюллетеней.</p>
+          <p>Исходные таблицы (CSV) лежат в папке <a href="https://github.com/Laiframe/billysparks2d/tree/main/data" target="_blank" rel="noopener">data</a> репозитория.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Данные: ЦИК России, протоколы ТИК Кольчугинского района. Сайт неофициальный и собран из открытых протоколов.</div>
+</footer>
+
+<div id="tip" hidden></div>
+
+<script>
+const DATA = /*__DATA__*/null;
+
+const nf = new Intl.NumberFormat("ru-RU");
+const pf = new Intl.NumberFormat("ru-RU", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const fmt = n => nf.format(n);
+const pct = (a, b) => b ? pf.format(a / b * 100) + " %" : "—";
+const ballots = o => o.valid + o.invalid;
+const color = key => `var(--s-${key})`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const $ = id => document.getElementById(id);
+const PARTIES = DATA.parties;
+const shortName = key => PARTIES.find(p => p.key === key).short;
+const votesWord = n => {
+  const m10 = n % 10, m100 = n % 100;
+  const w = m10 === 1 && m100 !== 11 ? "голос" : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? "голоса" : "голосов";
+  return `${fmt(n)} ${w}`;
+};
+const initials = full => { const [s, n, p] = full.split(" "); return `${s} ${n ? n[0] + "." : ""}${p ? p[0] + "." : ""}`; };
+
+/* Сводка */
+(function summary() {
+  const t = DATA.total;
+  const rows = [
+    ["1", "Избирателей в списках", fmt(t.voters), ""],
+    ["5+6", "Выдано бюллетеней (явка)", fmt(t.issued), pct(t.issued, t.voters), true],
+    ["6", "из них вне помещения для голосования", fmt(t.issuedOut), pct(t.issuedOut, t.issued) + " выданных"],
+    ["11", "Действительных бюллетеней", fmt(t.valid), ""],
+    ["10", "Недействительных бюллетеней", fmt(t.invalid), pct(t.invalid, ballots(t))],
+  ];
+  $("protocol").innerHTML = rows.map(([ln, label, v, extra, key]) =>
+    `<li${key ? ' class="key"' : ""}><span class="ln num">${ln}</span><span>${label}</span>` +
+    `<span class="val num">${v}${extra ? `<small>${extra}</small>` : ""}</span></li>`).join("");
+
+  const sorted = [...PARTIES].sort((a, b) => b.votes - a.votes);
+  $("lede").innerHTML = `На выборы пришёл каждый третий избиратель района: <strong>${pct(t.issued, t.voters)}</strong>. ` +
+    `По партийным спискам первое место заняла <strong>${sorted[0].short}</strong> (${pct(sorted[0].votes, ballots(t))}), ` +
+    `второе — <strong>«${sorted[1].short}»</strong> (${pct(sorted[1].votes, ballots(t))}). Разница составила ${votesWord(sorted[0].votes - sorted[1].votes)}.`;
+  $("party-src").href = DATA.partyUrl;
+})();
+
+/* Партии */
+(function parties() {
+  const t = DATA.total, base = ballots(t);
+  const sorted = [...PARTIES].sort((a, b) => b.votes - a.votes);
+  const max = sorted[0].votes / base;
+  $("party-chart").innerHTML = sorted.map(p => `
+    <div class="party-row">
+      <div class="name"><span class="swatch" style="background:${color(p.key)}"></span><span>${p.short}</span></div>
+      <div class="bar-track"><div class="bar" style="width:${(p.votes / base / max * 100).toFixed(2)}%;background:${color(p.key)}"></div></div>
+      <div class="pct num">${pct(p.votes, base)}</div>
+      <div class="votes"><span class="num">${votesWord(p.votes)}</span> · <span class="full">${esc(p.full)}</span></div>
+    </div>`).join("");
+
+  // где какая партия победила
+  const wins = {};
+  for (const u of DATA.uiks) {
+    const top = Object.entries(u.votes).sort((a, b) => b[1] - a[1])[0][0];
+    wins[top] = (wins[top] || 0) + 1;
+  }
+  const parts = Object.entries(wins).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${shortName(k)} — на ${n}`);
+  $("party-callout").innerHTML = `Партии-лидеры на участках из 40: ${parts.join(", ")}. ` +
+    `Результаты ЛДПР и «Единой России» по району почти равны, но по участкам их сторонники распределены неравномерно, это видно в разделе ниже.`;
+})();
+
+/* Участки */
+const uikState = { sort: "uik", district: "all", view: "chart" };
+
+(function uikControls() {
+  const sortOpts = [["uik", "По номеру УИК"], ["turnout", "По явке"],
+    ...[...PARTIES].sort((a, b) => b.votes - a.votes).map(p => [p.key, `По доле: ${p.short}`])];
+  $("uik-sort").innerHTML = sortOpts.map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
+  $("uik-district").innerHTML = `<option value="all">Все округа</option>` +
+    DATA.districts.map(d => `<option value="${d.n}">№${d.n} · ${d.name}</option>`).join("");
+  $("uik-legend").innerHTML = [...PARTIES].sort((a, b) => b.votes - a.votes)
+    .map(p => `<span><i class="swatch" style="background:${color(p.key)}"></i>${p.short}</span>`).join("") +
+    `<span><i class="swatch" style="background:var(--invalid)"></i>Недействительные</span>`;
+  $("uik-sort").addEventListener("change", e => { uikState.sort = e.target.value; renderUiks(); });
+  $("uik-district").addEventListener("change", e => { uikState.district = e.target.value; renderUiks(); });
+  const setView = v => {
+    uikState.view = v;
+    $("view-chart").setAttribute("aria-pressed", v === "chart");
+    $("view-table").setAttribute("aria-pressed", v === "table");
+    $("uik-chart").hidden = v !== "chart";
+    $("uik-legend").hidden = v !== "chart";
+    $("uik-table").hidden = v !== "table";
+  };
+  $("view-chart").addEventListener("click", () => setView("chart"));
+  $("view-table").addEventListener("click", () => setView("table"));
+})();
+
+const PARTY_ORDER = [...PARTIES].sort((a, b) => b.votes - a.votes).map(p => p.key);
+
+function renderUiks() {
+  let list = DATA.uiks.filter(u => uikState.district === "all" || u.district === +uikState.district);
+  const s = uikState.sort;
+  const key = s === "uik" ? u => u.uik : s === "turnout" ? u => -u.issued / u.voters : u => -u.votes[s] / ballots(u);
+  list = [...list].sort((a, b) => key(a) - key(b));
+  const maxTurnout = Math.max(...DATA.uiks.map(u => u.issued / u.voters));
+
+  $("uik-chart").innerHTML =
+    `<div class="uik-row head"><div>УИК</div><div>Явка</div><div class="stack-cell">Голоса, доля бюллетеней</div></div>` +
+    list.map(u => {
+      const base = ballots(u);
+      const segs = PARTY_ORDER.map(k => [k, u.votes[k]]).concat([["invalid", u.invalid]]);
+      const top = Object.entries(u.votes).sort((a, b) => b[1] - a[1])[0];
+      return `<div class="uik-row">
+        <div class="uik-id"><a href="${esc(u.url)}" target="_blank" rel="noopener" title="Протокол УИК №${u.uik} на сайте ЦИК">№${u.uik}</a><small>округ ${u.district}</small></div>
+        <div class="turnout"><span class="num">${pct(u.issued, u.voters)}</span>
+          <span class="mini"><i style="width:${(u.issued / u.voters / maxTurnout * 100).toFixed(1)}%"></i></span></div>
+        <div class="stack-cell">
+          <div class="stack">${segs.map(([k, v]) => `<span tabindex="0" data-uik="${u.uik}" data-k="${k}" style="flex:${v} 1 0;background:${k === "invalid" ? "var(--invalid)" : color(k)}" aria-label="${k === "invalid" ? "Недействительные" : shortName(k)}: ${fmt(v)}, ${pct(v, base)}"></span>`).join("")}</div>
+          <div class="stack-note">Лидер: ${shortName(top[0])}, ${pct(top[1], base)} · ${fmt(u.voters)} избирателей</div>
+        </div>
+      </div>`;
+    }).join("");
+
+  const totalRow = (() => {
+    const t = list.reduce((a, u) => {
+      a.voters += u.voters; a.issued += u.issued; a.valid += u.valid; a.invalid += u.invalid;
+      for (const k of PARTY_ORDER) a.votes[k] = (a.votes[k] || 0) + u.votes[k];
+      return a;
+    }, { voters: 0, issued: 0, valid: 0, invalid: 0, votes: {} });
+    return t;
+  })();
+  const row = (label, u, cls = "") => {
+    const base = ballots(u);
+    const top = Object.entries(u.votes).sort((a, b) => b[1] - a[1])[0][0];
+    return `<tr class="${cls}"><td>${label}</td><td>${fmt(u.voters)}</td><td>${pct(u.issued, u.voters)}</td>` +
+      PARTY_ORDER.map(k => `<td class="${k === top ? "lead" : ""}">${fmt(u.votes[k])} <small>${pct(u.votes[k], base)}</small></td>`).join("") +
+      `<td>${fmt(u.invalid)}</td></tr>`;
+  };
+  $("uik-table").innerHTML = `<table><thead><tr><th>УИК</th><th>Избирателей</th><th>Явка</th>` +
+    PARTY_ORDER.map(k => `<th>${shortName(k)}</th>`).join("") + `<th>Недейств.</th></tr></thead><tbody>` +
+    list.map(u => row(`<a href="${esc(u.url)}" target="_blank" rel="noopener">№${u.uik}</a>`, u)).join("") +
+    row(uikState.district === "all" ? "Итого" : `Итого, округ ${uikState.district}`, totalRow, "total") +
+    `</tbody></table>`;
+}
+
+/* Подсказка */
+(function tooltip() {
+  const tip = $("tip");
+  const show = (el, x, y) => {
+    const u = DATA.uiks.find(u => u.uik === +el.dataset.uik), k = el.dataset.k;
+    const v = k === "invalid" ? u.invalid : u.votes[k];
+    tip.innerHTML = `<b>УИК №${u.uik} · ${k === "invalid" ? "Недействительные" : shortName(k)}</b>${fmt(v)} бюлл. · ${pct(v, ballots(u))}`;
+    tip.hidden = false;
+    const r = tip.getBoundingClientRect();
+    tip.style.left = Math.max(8, Math.min(x + 12, innerWidth - r.width - 8)) + "px";
+    tip.style.top = Math.max(8, y - r.height - 12) + "px";
+  };
+  const host = $("uik-chart");
+  host.addEventListener("pointermove", e => {
+    const el = e.target.closest(".stack > span");
+    if (el) show(el, e.clientX, e.clientY); else tip.hidden = true;
+  });
+  host.addEventListener("pointerleave", () => { tip.hidden = true; });
+  host.addEventListener("focusin", e => {
+    const el = e.target.closest(".stack > span");
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    show(el, r.left + r.width / 2, r.top);
+  });
+  host.addEventListener("focusout", () => { tip.hidden = true; });
+  addEventListener("scroll", () => { tip.hidden = true; }, { passive: true });
+})();
+
+/* Округа */
+let currentDistrict = 1;
+function renderDistrictTabs() {
+  $("district-tabs").innerHTML = DATA.districts.map(d =>
+    `<button type="button" role="tab" id="dtab-${d.n}" aria-selected="${d.n === currentDistrict}" aria-controls="district-panel" title="${d.name}">№${d.n}</button>`).join("");
+  $("district-tabs").querySelectorAll("button").forEach((b, i) =>
+    b.addEventListener("click", () => { currentDistrict = DATA.districts[i].n; renderDistrictTabs(); renderDistrict(); }));
+}
+function renderDistrict() {
+  const d = DATA.districts.find(d => d.n === currentDistrict);
+  const base = ballots(d);
+  const max = d.candidates[0].votes;
+  const lead = d.candidates[0], second = d.candidates[1];
+  $("district-panel").setAttribute("aria-labelledby", `dtab-${d.n}`);
+  $("district-panel").innerHTML = `
+    <div class="district-head">
+      <h3>Округ №${d.n} · ${d.name}</h3>
+      <a href="${esc(d.url)}" target="_blank" rel="noopener">Протокол окружной комиссии</a>
+    </div>
+    <div class="facts">
+      <span>Участки: <b>${d.uiks.map(u => u.uik).join(", ")}</b></span>
+      <span>Избирателей: <b>${fmt(d.voters)}</b></span>
+      <span>Явка: <b>${pct(d.issued, d.voters)}</b></span>
+      <span>Недействительных: <b>${fmt(d.invalid)}</b></span>
+      <span>Кандидатов: <b>${d.candidates.length}</b></span>
+    </div>
+    <div class="cands">${d.candidates.map((c, i) => `
+      <div class="cand-row${i === 0 ? " first" : ""}">
+        <div class="cname">${esc(c.name)}${i === 0 ? ' · <span class="muted">лидер округа</span>' : ""}<div class="cvotes"><span class="num">${votesWord(c.votes)}</span></div></div>
+        <div class="bar-track"><div class="bar" style="width:${(c.votes / max * 100).toFixed(2)}%"></div></div>
+        <div class="pct num">${pct(c.votes, base)}</div>
+      </div>`).join("")}
+    </div>
+    <p class="muted" style="margin:14px 0 0">Отрыв лидера от второго места: ${votesWord(lead.votes - second.votes)}.</p>
+    <div class="table-wrap"><table><thead><tr><th>Кандидат</th>${d.uiks.map(u => `<th><a href="${esc(u.url)}" target="_blank" rel="noopener">УИК №${u.uik}</a></th>`).join("")}<th>Всего</th></tr></thead><tbody>
+      ${d.candidates.map(c => {
+        return `<tr><td>${esc(initials(c.name))}</td>` + d.uiks.map(u => {
+          const best = Math.max(...Object.values(u.votes));
+          return `<td class="${u.votes[c.name] === best ? "lead" : ""}">${fmt(u.votes[c.name])} <small>${pct(u.votes[c.name], ballots(u))}</small></td>`;
+        }).join("") + `<td class="lead">${fmt(c.votes)}</td></tr>`;
+      }).join("")}
+      <tr class="total"><td>Явка</td>${d.uiks.map(u => `<td>${pct(u.issued, u.voters)}</td>`).join("")}<td>${pct(d.issued, d.voters)}</td></tr>
+    </tbody></table></div>`;
+}
+
+renderUiks();
+renderDistrictTabs();
+renderDistrict();
+</script>

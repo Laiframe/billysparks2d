@@ -1,0 +1,119 @@
+{
+  "generated_at": "2026-10-20T02:03:10+03:00",
+  "election": "Совет народных депутатов Кольчугинского района IV созыва",
+  "date": "2011-03-13",
+  "vrn": "4334012124326",
+  "districts_expected": 8,
+  "party": {
+    "ballot": "party",
+    "district": 0,
+    "expected_uik": 40,
+    "all_uik": 40,
+    "valid_uik": 40,
+    "uik_complete": true,
+    "tik_ok": true,
+    "sum_ok": true,
+    "verified": true,
+    "complete": true
+  },
+  "districts": [
+    {
+      "ballot": "candidate",
+      "district": 1,
+      "expected_uik": 3,
+      "all_uik": 3,
+      "valid_uik": 3,
+      "uik_complete": true,
+      "tik_ok": true,
+      "sum_ok": true,
+      "verified": true,
+      "complete": true
+    },
+    {
+      "ballot": "candidate",
+      "district": 2,
+      "expected_uik": 3,
+      "all_uik": 3,
+      "valid_uik": 3,
+      "uik_complete": true,
+      "tik_ok": true,
+      "sum_ok": true,
+      "verified": true,
+      "complete": true
+    },
+    {
+      "ballot": "candidate",
+      "district": 3,
+      "expected_uik": 3,
+      "all_uik": 3,
+      "valid_uik": 3,
+      "uik_complete": true,
+      "tik_ok": true,
+      "sum_ok": true,
+      "verified": true,
+      "complete": true
+    },
+    {
+      "ballot": "candidate",
+      "district": 4,
+      "expected_uik": 3,
+      "all_uik": 3,
+      "valid_uik": 3,
+      "uik_complete": true,
+      "tik_ok": true,
+      "sum_ok": true,
+      "verified": true,
+      "complete": true
+    },
+    {
+      "ballot": "candidate",
+      "district": 5,
+      "expected_uik": 3,
+      "all_uik": 3,
+      "valid_uik": 3,
+      "uik_complete": true,
+      "tik_ok": true,
+      "sum_ok": true,
+      "verified": true,
+      "complete": true
+    },
+    {
+      "ballot": "candidate",
+      "district": 6,
+      "expected_uik": 8,
+      "all_uik": 8,
+      "valid_uik": 8,
+      "uik_complete": true,
+      "tik_ok": true,
+      "sum_ok": true,
+      "verified": true,
+      "complete": true
+    },
+    {
+      "ballot": "candidate",
+      "district": 7,
+      "expected_uik": 11,
+      "all_uik": 11,
+      "valid_uik": 11,
+      "uik_complete": true,
+      "tik_ok": true,
+      "sum_ok": true,
+      "verified": true,
+      "complete": true
+    },
+    {
+      "ballot": "candidate",
+      "district": 8,
+      "expected_uik": 6,
+      "all_uik": 6,
+      "valid_uik": 6,
+      "uik_complete": true,
+      "tik_ok": true,
+      "sum_ok": true,
+      "verified": true,
+      "complete": true
+    }
+  ],
+  "COMPLETE": true,
+  "notice": "uik_complete: все участковые протоколы проверены по дереву; COMPLETE=true только после сравнения их сумм с реальным протоколом ОИК или ТИК. Отсутствие ОИК не означает отсутствия УИК. Доступность сайта из среды разработки не подтверждена."
+}
